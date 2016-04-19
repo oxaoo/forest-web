@@ -17,13 +17,14 @@ function init() {
 }
 
 function initCamera() {
-    camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 10);
-    camera.position.set(0, 3.5, 5);
+    camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 50);
+    camera.position.set(10, 5, 5);
     camera.lookAt(scene.position);
 }
 
 
 function initRenderer() {
+    // renderer = new THREE.WebGLRenderer( {alpha: true});
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(WIDTH, HEIGHT);
 }
@@ -36,12 +37,21 @@ function initLights() {
 var mesh = null;
 function initMesh() {
     var loader = new THREE.JSONLoader();
-    loader.load('./tree.json', function(geometry, materials) {
+    loader.load('forest.json', function(geometry, materials) {
         mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
         mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.75;
         mesh.translation = THREE.GeometryUtils.center(geometry);
         scene.add(mesh);
     });
+
+/*    var loader = new THREE.JSONLoader();
+    loader.load('./forest0.json', function(geometry) {
+        mesh = new THREE.Mesh(geometry);
+        mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.25;
+        mesh.translation = THREE.GeometryUtils.center(geometry);
+
+        scene.add(mesh);
+    });*/
 }
 
 function rotateMesh() {
@@ -49,9 +59,9 @@ function rotateMesh() {
         return;
     }
 
-    mesh.rotation.x -= SPEED * 2;
+    // mesh.rotation.x -= SPEED * 2;
     mesh.rotation.y -= SPEED;
-    mesh.rotation.z -= SPEED * 3;
+    // mesh.rotation.z -= SPEED * 3;
 }
 
 function render() {
@@ -59,6 +69,7 @@ function render() {
     rotateMesh();
     renderer.render(scene, camera);
 }
+
 
 init();
 render();
